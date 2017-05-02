@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<!-- override these for application-specific URLs if you like: --> 
+		<property name="loginUrl" value="/login"/> 
+		<property name="successUrl" value="/inventory"/>
+		<property name="unauthorizedUrl" value="/unauthorized"/>
+		
+		<property name="filterChainDefinitions">
+			<value>
+				/resources/** = anon
+				/** = authc
+			</value>
+		</property>
+	</bean>
+ 
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="jdbcRealm" />
+	</bean>
+	
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<bean id="sha512Matcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="${shiro.hashAlgorithmName}" />
+		<property name="storedCredentialsHexEncoded" value="${shiro.storedCredentialsHexEncoded}" />
+		<property name="hashIterations" value="${shiro.hashIterations}" />
+	</bean>
+	
+    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->
+    <!-- the lifecycleBeanProcessor has run: -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager">
+            <ref bean="securityManager"/>
+        </property>
+    </bean>
+    	
+	<import resource="classpath*:shiro-realm.xml"/>
+
+</beans>

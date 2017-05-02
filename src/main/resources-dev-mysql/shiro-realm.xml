@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+           	 
+	<!-- Define the Shiro Realm implementation you want to use to connect to your back-end -->
+	<!-- security datasource: -->	
+	<bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="authenticationQuery" value="SELECT passphrase, CONCAT('${shiro.applicationSalt}', ':', salt) as salt FROM users where userid = ?"/>
+		<property name="userRolesQuery" value="SELECT name FROM roles LEFT JOIN user_roles ON roles.id = user_roles.role_id LEFT JOIN users ON user_roles.user_id = users.id WHERE userid = ?"/>
+		<property name="permissionsQuery" value="SELECT permission FROM role_permissions LEFT JOIN roles ON role_permissions.role_id = roles.id WHERE roles.name = ?"/>
+		<property name="permissionsLookupEnabled" value="true"/>
+		<property name="saltStyle" value="COLUMN"/>
+		<property name="credentialsMatcher" ref="sha512Matcher"/>
+	</bean>		
+</beans>
