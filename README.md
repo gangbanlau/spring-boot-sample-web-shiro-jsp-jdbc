@@ -2,3 +2,7 @@
 
 Demo Spring Boot with Apache Shiro 
 
+## Versioning
+
+Spring Boot 1.5.2
+Apache Shiro 1.3.2
