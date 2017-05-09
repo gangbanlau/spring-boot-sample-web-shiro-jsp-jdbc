@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>spring-boot-sample-shiro-web-jsp</name>
+	<name>spring-boot-sample-web-shiro-jsp-jdbc</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
