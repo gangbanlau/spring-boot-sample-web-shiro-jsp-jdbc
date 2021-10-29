@@ -16,5 +16,7 @@
 		<property name="permissionsLookupEnabled" value="true"/>
 		<property name="saltStyle" value="COLUMN"/>
 		<property name="credentialsMatcher" ref="sha512Matcher"/>
+		<!-- saltIsBase64Encoded v1.5.0 -->
+		<property name="saltIsBase64Encoded" value="false"/>
 	</bean>		
 </beans>

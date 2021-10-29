@@ -5,9 +5,8 @@ Demo Spring Boot with Apache Shiro
 ## Versioning
 
 Spring Boot 2.5.6
-Apache Shiro 1.3.2
+Apache Shiro 1.8.0
 
 ## Todo
-Apache Shiro 1.8.0
 Logback
 
