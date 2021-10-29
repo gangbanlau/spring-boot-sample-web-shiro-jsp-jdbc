@@ -1,7 +1,6 @@
 package my.mycompany.myapp.repository;
 
-import org.junit.runner.RunWith;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import my.mycompany.myapp.domain.User;
 import my.mycompany.myapp.repository.IUserDao;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)	// Don't replace the application default DataSource.
 public class UserDaoTests {

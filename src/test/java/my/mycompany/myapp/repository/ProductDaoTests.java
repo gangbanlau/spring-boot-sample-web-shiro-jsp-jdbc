@@ -2,14 +2,11 @@ package my.mycompany.myapp.repository;
 
 import java.util.List;
 
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.transaction.AfterTransaction;
@@ -18,14 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import my.mycompany.myapp.domain.Product;
 import my.mycompany.myapp.repository.IProductDao;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)	// Don't replace the application default DataSource.
 public class ProductDaoTests {
@@ -35,13 +31,13 @@ public class ProductDaoTests {
 	@Autowired
 	IProductDao productDao;
 
-    @BeforeClass
+    @BeforeAll
     public static void oneTimeSetUp() {
         // one-time initialization code   
     	logger.info("@BeforeClass - oneTimeSetUp");
     }
  
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
     	logger.info("@AfterClass - oneTimeTearDown");
@@ -61,12 +57,12 @@ public class ProductDaoTests {
     	logger.info("@AfterTransaction verifyFinalDatabaseState");
     }
     
-	@Before
+	@BeforeEach
 	public void setUp() {
 		logger.info("@Before setUp");
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() {
 		logger.info("@After tearDown");
 	}

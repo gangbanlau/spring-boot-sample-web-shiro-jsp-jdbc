@@ -1,22 +1,24 @@
 package my.mycompany.myapp.service;
 
-import org.junit.Test;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
+import static java.time.Duration.ofMillis;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import my.mycompany.myapp.service.IProductsService;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)	// Don't replace the application default DataSource.
 public class ProductsServiceImplTests {
@@ -35,24 +37,27 @@ public class ProductsServiceImplTests {
 		
 		double newPrice = productService.findOneProduct(1L).getPrice().doubleValue();
 		
-		Assert.assertEquals(oldPrice * 2, newPrice, 0.001);
+		assertEquals(oldPrice * 2, newPrice, 0.001);
 	}
 	
 	@Test
 	public void testFineOneProduct() {
-		Assert.assertEquals("product not exists?", true, 
-				null != productService.findOneProduct(1L));		
+		assertEquals(true, 
+				null != productService.findOneProduct(1L), "product not exists?");		
 	}
 	
-	@Test(expected = EmptyResultDataAccessException.class)
+	@Test
 	public void testFindOneProductNotExists() {
-		productService.findOneProduct(1000L);
+		Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+			productService.findOneProduct(1000L);
+		  });
 	}
 	
-	@Ignore("Not Ready to Run")  
-	@Test(timeout = 1000)
+	@Disabled("Not Ready to Run")  
+	@Test
 	public void testdivisionWithException() {
-		logger.warn("Not Ready to Run");
-	}  
- 	
+		assertTimeout(ofMillis(1000), () -> {
+			logger.warn("Not Ready to Run");
+		});
+	}
 }
