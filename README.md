@@ -8,5 +8,4 @@ Spring Boot 2.5.6
 Apache Shiro 1.8.0
 
 ## Todo
-Logback
 
