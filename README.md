@@ -5,8 +5,9 @@ Demo Spring Boot with Apache Shiro
 ## Features
 
  - Profiles
+ - Validation
+ - Task Execution and Scheduling
  - Spring Session Redis
- - Spring Schedule
  - Testing
  
 ## Versioning
