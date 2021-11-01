@@ -2,20 +2,18 @@ package my.mycompany.myapp.service.impl;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import my.mycompany.myapp.domain.Product;
 import my.mycompany.myapp.repository.IProductDao;
 import my.mycompany.myapp.service.IProductsService;
 
+@Slf4j
 @Service
 public class ProductsServiceImpl implements IProductsService {
-	private static final Logger logger = LoggerFactory.getLogger(ProductsServiceImpl.class);
-
 	@Autowired
 	IProductDao productDao;
 
@@ -47,7 +45,7 @@ public class ProductsServiceImpl implements IProductsService {
 				productDao.update(product);
 			}
 		} else {
-			logger.warn("no product to increase price");
+			log.warn("no product to increase price");
 		}
 	}
 }

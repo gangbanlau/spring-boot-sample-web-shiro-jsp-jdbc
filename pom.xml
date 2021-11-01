@@ -112,11 +112,18 @@
 			<version>${org.apache.shiro-version}</version>
 		</dependency> -->
 		        
+		<!-- JDBC -->        
 		<dependency>
     		<groupId>org.mariadb.jdbc</groupId>
     		<artifactId>mariadb-java-client</artifactId>
 		</dependency>
-								        
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		
+		<!-- Testing -->						        
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

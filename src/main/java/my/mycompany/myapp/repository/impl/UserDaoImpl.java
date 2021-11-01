@@ -9,17 +9,16 @@ import javax.sql.DataSource;
 import my.mycompany.myapp.domain.User;
 import my.mycompany.myapp.repository.IUserDao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class UserDaoImpl implements IUserDao {
-	private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-	
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert insertProduct;
 	

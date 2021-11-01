@@ -9,8 +9,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
 	//@Autowired
 	//private JdbcRealm shiroRealm;		// here using JDBCRealm, need to change if use custom realm
 	
@@ -44,7 +43,7 @@ public class LoginController {
     		BindingResult result, SessionStatus sessionStatus) {
 
     	if (result.hasErrors()) {
-    		logger.info("valid result has errors");
+    		log.info("valid result has errors");
     		return null;
     	}
   
@@ -55,9 +54,9 @@ public class LoginController {
 
         try {
           currentUser.login(token);
-          logger.info("AUTH SUCCESS");
+          log.info("AUTH SUCCESS");
         } catch (AuthenticationException ae) {
-          logger.info("AUTH MSSG: " + ae.getMessage());
+          log.info("AUTH MSSG: " + ae.getMessage());
           return null;
         }
         

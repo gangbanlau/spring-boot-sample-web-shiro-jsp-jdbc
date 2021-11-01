@@ -6,8 +6,6 @@ import my.mycompany.myapp.service.IUsersService;
 
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,10 +13,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UsersServiceImpl implements IUsersService {
-	private static final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
-
 	private SecureRandomNumberGenerator srGen = new SecureRandomNumberGenerator();
 
 	@Autowired

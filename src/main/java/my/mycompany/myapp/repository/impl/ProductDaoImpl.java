@@ -11,18 +11,17 @@ import javax.sql.DataSource;
 import my.mycompany.myapp.domain.Product;
 import my.mycompany.myapp.repository.IProductDao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository("IProductDao")
 public class ProductDaoImpl implements IProductDao {
-	private static final Logger logger = LoggerFactory.getLogger(ProductDaoImpl.class);
-
 	private JdbcTemplate jdbcTemplate;	
 	private SimpleJdbcInsert insertProduct;
 	
@@ -49,7 +48,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	public Product insert(Product prod) {
-		logger.info("Inserting product: " + prod.getName());
+		log.info("Inserting product: " + prod.getName());
 		
 		Map<String, Object> parameters = new HashMap<String, Object>(3);
         parameters.put("name", prod.getName());	      
@@ -61,14 +60,14 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	public void update(Product prod) {
-		logger.info("Updating product: " + prod.getName());
+		log.info("Updating product: " + prod.getName());
 
 		// Don't allow change product name
 		
 		String sql = "UPDATE products SET description = ?, price = ? WHERE id = ?";
 		int count = this.jdbcTemplate.update(sql,
 				new Object[]{prod.getDescription(), prod.getPrice(), prod.getId() });
-		logger.info("Rows affected: " + count);
+		log.info("Rows affected: " + count);
 	}
 	
 	public void delete(Long id) {
@@ -89,7 +88,7 @@ public class ProductDaoImpl implements IProductDao {
 	}
 	
 	public List<Product> findAll() {
-		logger.info("Getting products!");
+		log.info("Getting products!");
 		
 		List<Product> products = this.jdbcTemplate.query(
 				"SELECT id, name, description, price FROM products", new ProductMapper());
