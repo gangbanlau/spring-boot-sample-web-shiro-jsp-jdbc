@@ -76,7 +76,7 @@ public class ProductDaoTests {
 	
 	@Test
 	public void testCount() {
-		assertEquals(productDao.count(), 3);
+		assertEquals(3, productDao.count());
 	}
 	
 	@Test
@@ -86,8 +86,8 @@ public class ProductDaoTests {
 	
 	@Test 
 	public void testFindOne() {
-		assertEquals(productDao.findOne(1L).getName(), "Lamp");
-		assertEquals(productDao.findOne("Lamp").getName(), "Lamp");
+		assertEquals("Lamp", productDao.findOne(1L).getName());
+		assertEquals("Lamp", productDao.findOne("Lamp").getName());
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class ProductDaoTests {
 
 		List<Product> products = productDao.findAll();
 
-		assertEquals(products.size(), 3);
+		assertEquals(3, products.size());
 	}
 	
 	@Test
@@ -124,7 +124,7 @@ public class ProductDaoTests {
 
 		List<Product> updatedProducts = productDao.findAll();
 		for (Product p : updatedProducts) {
-			assertEquals(p.getPrice(), 200.12);
+			assertEquals(200.12, p.getPrice());
 		}
 
 	}
