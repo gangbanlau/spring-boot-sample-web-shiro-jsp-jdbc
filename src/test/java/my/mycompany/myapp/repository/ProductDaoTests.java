@@ -7,8 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,55 +14,56 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import static org.assertj.core.api.Assertions.*;
+
+import lombok.extern.slf4j.Slf4j;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import my.mycompany.myapp.domain.Product;
 import my.mycompany.myapp.repository.IProductDao;
 
+@Slf4j
 @SpringBootTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)	// Don't replace the application default DataSource.
 public class ProductDaoTests {
-
-	private static final Logger logger = LoggerFactory.getLogger(ProductDaoTests.class);
-	
 	@Autowired
 	IProductDao productDao;
 
     @BeforeAll
     public static void oneTimeSetUp() {
         // one-time initialization code   
-    	logger.info("@BeforeClass - oneTimeSetUp");
+    	log.info("@BeforeClass - oneTimeSetUp");
     }
  
     @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
-    	logger.info("@AfterClass - oneTimeTearDown");
+    	log.info("@AfterClass - oneTimeTearDown");
     }
     
 
     @BeforeTransaction
     public void verifyInitialDatabaseState() {
         // logic to verify the initial state before a transaction is started
-    	logger.info("@BeforeTransaction verifyInitialDatabaseState");
+    	log.info("@BeforeTransaction verifyInitialDatabaseState");
     }
 
 
     @AfterTransaction
     public void verifyFinalDatabaseState() {
         // logic to verify the final state after transaction has rolled back
-    	logger.info("@AfterTransaction verifyFinalDatabaseState");
+    	log.info("@AfterTransaction verifyFinalDatabaseState");
     }
     
 	@BeforeEach
 	public void setUp() {
-		logger.info("@Before setUp");
+		log.info("@Before setUp");
 	}
 
 	@AfterEach
 	public void tearDown() {
-		logger.info("@After tearDown");
+		log.info("@After tearDown");
 	}
 
 	@Test
@@ -77,7 +76,7 @@ public class ProductDaoTests {
 	
 	@Test
 	public void testCount() {
-		assertThat(productDao.count()).isEqualTo(3);
+		assertEquals(productDao.count(), 3);
 	}
 	
 	@Test
@@ -87,8 +86,8 @@ public class ProductDaoTests {
 	
 	@Test 
 	public void testFindOne() {
-		assertThat(productDao.findOne(1L).getName()).isEqualTo("Lamp");
-		assertThat(productDao.findOne("Lamp").getName()).isEqualTo("Lamp");
+		assertEquals(productDao.findOne(1L).getName(), "Lamp");
+		assertEquals(productDao.findOne("Lamp").getName(), "Lamp");
 	}
 	
 	@Test
@@ -96,7 +95,7 @@ public class ProductDaoTests {
 
 		List<Product> products = productDao.findAll();
 
-		assertThat(products.size()).isEqualTo(3);
+		assertEquals(products.size(), 3);
 	}
 	
 	@Test
@@ -125,7 +124,7 @@ public class ProductDaoTests {
 
 		List<Product> updatedProducts = productDao.findAll();
 		for (Product p : updatedProducts) {
-			assertThat(p.getPrice()).isEqualTo(200.12);
+			assertEquals(p.getPrice(), 200.12);
 		}
 
 	}
